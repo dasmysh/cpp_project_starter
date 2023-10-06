@@ -8,4 +8,5 @@ Starter template for C++ projects, heavily inspired by https://github.com/cpp-be
 - Start python script to create new project:
 
   ```python .\start_new_project.py -n app_name --namespace testns -r "Readable Project Name" -d "Some description." -a "My Name" -e "some.email@host.de" project_name```
+
   Creates a new project in the folder `project_name`.
