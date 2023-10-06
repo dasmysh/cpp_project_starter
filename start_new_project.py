@@ -54,11 +54,11 @@ print(f"Create directory {project_path}.")
 if not test_run: os.mkdir(project_path)
 
 print(f"Initialize git repository {project_path}.")
-if not test_run: git_repo = Repo.init(project_path, bare=True)
+if not test_run: git_repo = Repo.init(project_path)
 print(f"Add submodule vcpkg.")
 if not test_run: Submodule.add(git_repo, "vcpkg", "vcpkg", "https://github.com/microsoft/vcpkg.git")
 
-for root, dirnames, filenames in os.walk("."):
+for root, dirnames, filenames in os.walk("./template"):
     if ".git" in root:
         continue
 
@@ -68,6 +68,9 @@ for root, dirnames, filenames in os.walk("."):
 
     if "app_name" in root:
         root_dest = root.replace("app_name", app_name)
+    root_dest_components = os.path.normpath(root_dest).split(os.sep)
+    root_dest_components.remove("template")
+    root_dest = os.sep.join(root_dest_components)
     dest_abs = os.path.join(project_path, root_dest)
 
     if "cmake" in root:
@@ -76,7 +79,7 @@ for root, dirnames, filenames in os.walk("."):
         continue
 
     if not os.path.isdir(dest_abs):
-        os.mkdir(dest_abs)
+        if not test_run: os.mkdir(dest_abs)
     for filename in filenames:
         src = os.path.normpath(os.path.join(root_abs, filename))
         if os.path.isfile(src) and not filename == 'start_new_project.py':
