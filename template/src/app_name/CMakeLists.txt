@@ -18,6 +18,7 @@ file(GLOB TOP_FILES CONFIGURE_DEPENDS
     ${PROJECT_SOURCE_DIR}/Readme.md
     ${PROJECT_SOURCE_DIR}/.clang-tidy
     ${PROJECT_SOURCE_DIR}/.clang-format
+    ${PROJECT_SOURCE_DIR}/.editorconfig
     ${CMAKE_BINARY_DIR}/glm.natvis
     ${CMAKE_BINARY_DIR}/imgui.natvis
     ${CMAKE_BINARY_DIR}/imgui.gdb

@@ -1,6 +1,6 @@
 function(enable_doxygen)
-  option(ENABLE_DOXYGEN "Enable doxygen doc builds of source" OFF)
-  if(ENABLE_DOXYGEN)
+  option(${NAMESPACE}_ENABLE_DOXYGEN "Enable doxygen doc builds of source" OFF)
+  if(${NAMESPACE}_ENABLE_DOXYGEN)
     set(DOXYGEN_CALLER_GRAPH ON)
     set(DOXYGEN_CALL_GRAPH ON)
     set(DOXYGEN_EXTRACT_ALL ON)

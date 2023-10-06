@@ -1,5 +1,6 @@
 import argparse
 import os
+import platform
 import shutil
 from git import Repo, Submodule
 import datetime
@@ -24,14 +25,15 @@ absolute_path = os.path.abspath(args.path)
 project_name = args.project_name
 app_name = args.app_name if args.app_name != "" else project_name
 namespace = args.namespace if args.namespace != "" else app_name
+vcpkg_name = project_name.replace("_", "")
 date = now.strftime("%Y.%m.%d")
 year = now.strftime("%Y")
 readable_name = args.readable_name if args.readable_name != "" else args.project_name
 description = args.description if args.description != "" else f"Basic application for {readable_name}."
 author = args.author
 email = args.email
-replace_pattern = "@PROJECT_NAME|@DATE|@YEAR|@APP_NAME|@READABLE_NAME|@DESCRIPTION|@AUTHOR|@AUTHOR_EMAIL|@NAMESPACE"
-replace_dict = { "@PROJECT_NAME": project_name, "@NAMESPACE": namespace, "@DATE": date, "@YEAR": year, "@APP_NAME": app_name,
+replace_pattern = "@PROJECT_NAME|@DATE|@YEAR|@APP_NAME|@READABLE_NAME|@DESCRIPTION|@AUTHOR|@AUTHOR_EMAIL|@NAMESPACE|@VCPKG_NAME"
+replace_dict = { "@PROJECT_NAME": project_name, "@NAMESPACE": namespace, "@DATE": date, "@YEAR": year, "@APP_NAME": app_name, "@VCPKG_NAME": vcpkg_name,
                 "@READABLE_NAME": readable_name, "@DESCRIPTION": description, "@AUTHOR": author, "@AUTHOR_EMAIL": email }
 
 
@@ -87,3 +89,4 @@ for root, dirnames, filenames in os.walk("./template"):
             print(f"Copy {src} to {dest}")
             if not test_run: configure_file(src, dest)
 
+os.system(f"cmake -S {project_path}  --preset=default")

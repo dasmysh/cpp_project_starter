@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.27.1)
 
 set(APPLICATION_NAME @PROJECT_NAME)
 project(${APPLICATION_NAME} CXX)
+string(TOUPPER "@NAMESPACE" NAMESPACE)
 
 include(cmake/StandardProjectSettings.cmake)
 
@@ -22,10 +23,10 @@ enable_doxygen()
 include(cmake/StaticAnalyzers.cmake)
 
 option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" OFF)
-option(ENABLE_TESTING "Enable Test Builds" ON)
+option(${NAMESPACE}_ENABLE_TESTING "Enable Test Builds" ON)
 
-option(ENABLE_PCH "Enable Precompiled Headers" OFF)
-if (ENABLE_PCH)
+option(${NAMESPACE}_ENABLE_PCH "Enable Precompiled Headers" OFF)
+if (${NAMESPACE}_ENABLE_PCH)
   # This sets a global PCH parameter, each project will build its own PCH, which
   # is a good idea if any #define's change
   target_precompile_headers(${APPLICATION_NAME}_options INTERFACE <vector> <string> <map> <utility>)
@@ -80,7 +81,7 @@ endif()
 
 include(cmake/ProjectGlobal.cmake)
 
-if(ENABLE_TESTING)
+if(${NAMESPACE}_ENABLE_TESTING)
   enable_testing()
   message(
     "Building Tests. Be sure to check out test/constexpr_tests for constexpr testing"
