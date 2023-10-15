@@ -1,1 +1,1 @@
-add_subdirectory(@APP_NAME)
+add_subdirectory(${APPLICATION_NAME})

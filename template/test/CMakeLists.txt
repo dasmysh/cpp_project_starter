@@ -3,31 +3,20 @@ file(GLOB TOP_FILES CONFIGURE_DEPENDS
 source_group(" " FILES ${TOP_FILES})
 add_library(catch_main STATIC catch_main.cpp ${TOP_FILES})
 target_link_libraries(catch_main PUBLIC Catch2::Catch2 Catch2::Catch2WithMain)
-
-add_executable(tests tests.cpp ${TOP_FILES})
-target_link_libraries(tests PRIVATE ${APPLICATION_NAME}_warnings ${APPLICATION_NAME}_options catch_main)
-set_project_static_analyzer(tests)
+set_target_properties(catch_main PROPERTIES FOLDER "tests")
 
 include(CTest)
 include(Catch)
 
-# automatically discover tests that are defined in catch based test files you
-# can modify the unittests. TEST_PREFIX to whatever you want, or use different
-# for different binaries
-catch_discover_tests(
-  tests
-  TEST_PREFIX
-  "unittests."
-  EXTRA_ARGS
-  -s
-  --reporter=xml
-  --out=tests.xml)
-
 # Add a file containing a set of constexpr tests
 add_executable(constexpr_tests constexpr_tests.cpp)
 target_link_libraries(constexpr_tests ${APPLICATION_NAME}_warnings ${APPLICATION_NAME}_options catch_main)
+set_target_properties(constexpr_tests PROPERTIES FOLDER "tests")
 set_project_static_analyzer(constexpr_tests)
 
+# automatically discover tests that are defined in catch based test files you
+# can modify the unittests. TEST_PREFIX to whatever you want, or use different
+# for different binaries
 catch_discover_tests(
   constexpr_tests
   TEST_PREFIX
@@ -43,6 +32,7 @@ catch_discover_tests(
 add_executable(relaxed_constexpr_tests constexpr_tests.cpp)
 target_link_libraries(relaxed_constexpr_tests PRIVATE ${APPLICATION_NAME}_warnings ${APPLICATION_NAME}_options catch_main)
 target_compile_definitions(relaxed_constexpr_tests PRIVATE -DCATCH_CONFIG_RUNTIME_STATIC_REQUIRE)
+set_target_properties(relaxed_constexpr_tests PROPERTIES FOLDER "tests")
 set_project_static_analyzer(relaxed_constexpr_tests)
 
 catch_discover_tests(
@@ -53,3 +43,6 @@ catch_discover_tests(
   -s
   --reporter=xml
   --out=relaxed_constexpr.xml)
+
+
+  add_subdirectory(${APPLICATION_NAME})
