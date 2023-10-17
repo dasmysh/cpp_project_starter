@@ -32,7 +32,7 @@ readable_name = args.readable_name if args.readable_name != "" else args.project
 description = args.description if args.description != "" else f"Basic application for {readable_name}."
 author = args.author
 email = args.email
-replace_pattern = "@PROJECT_NAME|@DATE|@YEAR|@APP_NAME|@READABLE_NAME|@DESCRIPTION|@AUTHOR|@AUTHOR_EMAIL|@NAMESPACE|@VCPKG_NAME"
+replace_pattern = "@PROJECT_NAME|@DATE|@YEAR|@APP_NAME|@READABLE_NAME|@DESCRIPTION|@AUTHOR_EMAIL|@AUTHOR|@NAMESPACE|@VCPKG_NAME"
 replace_dict = { "@PROJECT_NAME": project_name, "@NAMESPACE": namespace, "@DATE": date, "@YEAR": year, "@APP_NAME": app_name, "@VCPKG_NAME": vcpkg_name,
                 "@READABLE_NAME": readable_name, "@DESCRIPTION": description, "@AUTHOR": author, "@AUTHOR_EMAIL": email }
 
